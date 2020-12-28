@@ -1,6 +1,8 @@
 # TesquaVillanueva
 
-Villanueva
+//Before you run the application, please compile the other three files (.idea, .vscode and my_env)
+with the rest of the codes you copied to make sure the application will run smoothly, i cannot upload all the files in one go
+since it's more than 100 files and more than 25 mb the memory size.//
 
 Note: You need to install in the gitbash the libraries needed to execute the app 
 *pip install flask 
@@ -17,4 +19,4 @@ Note: You need to install in the gitbash the libraries needed to execute the app
 6.) You'll see the login form in the web and use 'admin' as both username and password 
 7.) You may now use the functionalities like add,edit,delete and search in the Studentlist app
 
-Note: You may check the python codes using notepad++
+
