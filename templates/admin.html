@@ -1,0 +1,251 @@
+
+<!doctype html>
+<html>
+	<head>
+		<title>Student List</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+		<style>
+			#head{
+				float:left;
+				width:40%;
+				display:inline;
+			}
+			#head2{
+				float:left;
+				width:60%;
+				display:inline;
+			}
+		</style>
+	</head>
+	<body>
+		<div ng-app="app" ng-controller="ctrl">
+			<div class="w3-bar w3-blue w3-card-4 w3-padding">
+				<h3><b>STUDENT REGISTRATION LIST</b></h3>
+				<div class="w3-display-topright" style="padding:25px;"><a href="{{ url_for('logout') }}" class="btn">Logout</a> </div>
+			</div>
+			{% raw %}
+			<div class="w3-container">
+				<br>
+				<div id="head">
+				<form method="post" action="/search" 
+         style="margin:auto;max-width:600px">
+		
+            <label>Search: <input ng-model="searchText"></label>
+			
+		
+			</div>
+			<div id="head2">
+            
+            </button>
+				
+				</form>
+				
+
+					<button class="w3-button w3-blue w3-right" onclick="document.getElementById('mymodal').style.display='block'">+ADD</button>
+				</div>
+				
+				
+		
+			</center>
+				<br><br>
+				<table id="empTable"class="w3-table-all w3-card">
+					<tr>
+						<th ng-repeat="h in header">{{ h | uppercase }}</th>
+					</tr>
+					<tr ng-repeat="s in students | filter:searchText" onclick="myFunction(this)">
+						<td ng-repeat="items in s">{{ items | uppercase}}</td>
+						<td>
+							<button class="w3-button w3-yellow" onclick="document.getElementById('mymodal3').style.display='block'">Edit</button>
+							<button class="w3-button w3-red" onclick="document.getElementById('mymodal1').style.display='block'">Delete</button>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+			<!--ADD STUDENT-->
+			<div class="w3-modal" id="mymodal">
+				<div class="w3-modal-content w3-animate-top">
+					<div class="w3-container w3-blue">
+						<h3><b>ADD STUDENT</b></h3>
+						<span class="w3-button w3-display-topright" onclick="document.getElementById('mymodal').style.display='none'">&times;</span>
+					</div>
+					<div class="w3-container">
+						<br>
+						
+						<form method="post" action="/register">
+							<div class="msg">{{ msg }}</div> 
+							<br />
+							<label for="idno"><b>IDNO</b></label>
+							<input type="text" class="w3-input w3-border" id="idno" name="idno" required>
+							<label for="lastname"><b>LASTNAME</b></label>
+							<input type="text" class="w3-input w3-border" id="lastname" name="lastname" required>
+							<label for="firstname"><b>FIRSTNAME</b></label>
+							<input type="text" class="w3-input w3-border" id="firstname" name="firstname"  required>
+							<label for="course"><b>COURSE</b></label>
+							<select id="course" class="w3-select w3-border" name="course" required>
+								<option ng-repeat="c in courses">{{ c }}</option>
+							</select>
+							<label for="level"><b>LEVEL</b></label>
+							<select id="level" class="w3-select w3-border" name="level" required>
+								<option ng-repeat="l in levels">{{ l }}</option>
+							</select>
+							<br><br>
+							<button type="button" style="margin:5px;" class="w3-button w3-red w3-right" onclick="document.getElementById('mymodal').style.display='none'">CANCEL</button>
+							<input type="submit" style="margin:5px;" value="SUBMIT" class="w3-button w3-blue w3-right">
+						</form>
+							<br><br>
+					</div>
+				</div>
+			</div>
+			<!--DELETE STUDENT-->
+			<div class="w3-modal" id="mymodal1">
+				<div class="w3-modal-content w3-animate-top">
+					<div class="w3-container w3-red">
+						<h3><b>DELETE STUDENT</b></h3>
+		
+						<span class="w3-button w3-display-topright" onclick="document.getElementById('mymodal1').style.display='none'">&times;</span>
+					</div>
+					<div class="w3-container">
+						<p>Are you sure you want to delete this item?</p>
+						<br>
+						<form method="post" action="/deletestudent">
+							<label for="idno"><b>IDNO</b></label>
+							<input type="text" class="w3-input w3-border" id="myText" name="myText" >
+							<label for="lastname"><b>LASTNAME</b></label>
+							<input type="text" class="w3-input w3-border" id="myText1" name="myText1" >
+							<label for="firstname"><b>FIRSTNAME</b></label>
+							<input type="text" class="w3-input w3-border" id="myText2" name="myText2" >
+							
+							<br>
+							<button type="button" style="margin:5px;" class="w3-button w3-red w3-right" onclick="document.getElementById('mymodal1').style.display='none'">CANCEL</button>
+							<button type="button" style="margin:5px;" class="w3-button w3-green w3-right" onclick="document.getElementById('deleteconfirmation').style.display='block'">DELETE</button>
+							
+							
+							<div class="w3-modal" id="deleteconfirmation">
+								<div class="w3-modal-content w3-animate-top">
+									<div class="w3-container w3-red">
+										<h3 style="letter-spacing:3px"><b>CONFIRMATION</b></h3>
+										<span class="w3-button w3-display-topright" onclick="document.getElementById('deleteconfirmation').style.display='none'">&times;</span>
+											
+									</div>
+									<div class="w3-container" >
+									<br>
+										<h3 style="color:black">Confirmation: Would you like to confirm the deletion of this student?</h3>
+												<input type="cancel" value="CANCEL" class="w3-button w3-orange"style="width:12%" onclick="document.getElementById('deleteconfirmation').style.display='none'">
+												<input type="submit" value="CONFIRM" class="w3-button w3-blue" style="width:12%">
+										<br>
+											<br>
+									</div>
+								</div>
+							</div>
+						</form>
+							<br><br>
+					</div>
+				</div>
+			</div>
+			<!--EDIT STUDENT-->
+			<div class="w3-modal" id="mymodal3">
+				<div class="w3-modal-content w3-animate-top">
+					<div class="w3-container w3-yellow">
+						<h3><b>EDIT STUDENT</b></h3>
+						<span class="w3-button w3-display-topright" onclick="document.getElementById('mymodal3').style.display='none'">&times;</span>
+					</div>
+					<div class="w3-container">
+						<p>Are you sure you want to edit this item?</p>
+						<form method="post" action="/editstudent">
+							<label for="idno"><b>IDNO</b></label>
+							<input type="text" class="w3-input w3-border" id="myText0" name="myText0" readonly >
+							<label for="lastname"><b>LASTNAME</b></label>
+							<input type="text" class="w3-input w3-border" id="myText01" name="myText01" required>
+							<label for="firstname"><b>FIRSTNAME</b></label>
+							<input type="text" class="w3-input w3-border" id="myText02" name="myText02" required>
+							<label for="course"><b>COURSE</b></label>
+							<select id="myText03" class="w3-select w3-border" name="myText03" required>
+								<option ng-repeat="c in courses">{{ c }}</option>
+							</select>
+							<label for="level"><b>LEVEL</b></label>
+							<select id="myText04" class="w3-select w3-border" name="myText04" required>
+								<option ng-repeat="l in levels">{{ l }}</option>
+							</select>
+							<br><br>
+							<button type="button" style="margin:5px;" class="w3-button w3-red w3-right" onclick="document.getElementById('mymodal3').style.display='none'">CANCEL</button>
+							<button type="button" style="margin:5px;" class="w3-button w3-green w3-right" onclick="document.getElementById('editconfirmationmodal').style.display='block'">UPDATE</button>
+							
+							<div class="w3-modal" id="editconfirmationmodal">
+								<div class="w3-modal-content w3-animate-top">
+									<div class="w3-container w3-green">
+										<h3 style="letter-spacing:3px"><b>CONFIRMATION</b></h3>
+										<span class="w3-button w3-display-topright" onclick="document.getElementById('editconfirmationmodal').style.display='none'">&times;</span>
+									</div>
+									<div class="w3-container" >
+									<br>
+										<h3 style="color:black">Confirmation: Would you like to confirm the changes you've made?</h3>
+												<input type="cancel" value="CANCEL" class="w3-button w3-orange"style="width:12%" onclick="document.getElementById('editconfirmationmodal').style.display='none'">
+												<input type="submit" value="CONFIRM" class="w3-button w3-blue" style="width:12%">
+										<br>
+											<br>
+									</div>
+								</div>
+							</div>
+						</form>
+							<br><br>
+					</div>
+				</div>
+			</div>
+			{% endraw%}<br>
+			<center><div class="msg" style="Font-size:20px">{{ msg }}</div></center>
+		</div>
+		
+		
+		<script>
+			var app=angular.module("app",[]);
+				app.controller("ctrl",function($scope,$http){
+					$scope.header=['id','idno','lastname','firstname','course','level','action'];
+					$scope.courses=['BSIT','BSHRM','BSMARE','BSECE','BSED'];
+					$scope.levels=['1','2','3','4','5'];
+					$http({
+						method:'GET',
+						url:'http://localhost:5000/getall'
+					}).then(function(response){
+						$scope.students=response.data.list
+					})
+				})
+				function myFunction(x){
+					var myTab = document.getElementById('empTable');
+					var objCells = myTab.rows.item(x.rowIndex).cells;
+					var val=objCells.item(1).innerHTML;
+					var val1=objCells.item(2).innerHTML;
+					var val2=objCells.item(3).innerHTML;
+					document.getElementById("myText").value = val;
+					document.getElementById("myText1").value = val1;
+					document.getElementById("myText2").value = val2;
+					
+					var objCells1 = myTab.rows.item(x.rowIndex).cells;
+					var Val=objCells1.item(1).innerHTML;
+					var Val1=objCells1.item(2).innerHTML;
+					var Val2=objCells1.item(3).innerHTML;
+					var Val3=objCells1.item(4).innerHTML;
+					var Val4=objCells1.item(5).innerHTML;
+					document.getElementById("myText0").value = Val;
+					document.getElementById("myText01").value = Val1;
+					document.getElementById("myText02").value = Val2;
+					document.getElementById("myText03").value = Val3;
+					document.getElementById("myText04").value = Val4;
+					
+				}
+				var modal0 = document.getElementById('mymodal');
+				var modal1 = document.getElementById('mymodal1');
+				var modal2 = document.getElementById('mymodal3');
+				window.onclick = function(event){
+					if(event.target == modal1 || event.target == modal2 || event.target == modal0){
+						modal0.style.display = "none";
+						modal1.style.display = "none";
+						modal2.style.display = "none";
+					}
+				}
+		</script>
+	</body>
+</html>
