@@ -1,10 +1,7 @@
 # TesquaVillanueva
 
-//Before you run the application, please compile the other three files (.idea, .vscode and my_env)
-with the rest of the codes you copied to make sure the application will run smoothly, i cannot upload all the files in one go
-since it's more than 100 files and more than 25 mb the memory size.//
-
 Note: You need to install in the gitbash the libraries needed to execute the app 
+(TO MAKE SURE, INSTALL A LOT OF LIBRARIES TO PREVENT ERRORS SINCE SOME OF THEM ARE ALREADY INSTALLED AUTOMATICALLY IN MY COMPUTER)
 *pip install flask 
 *pip install flask-mysqldb 
 *pip install flask-Cors 
